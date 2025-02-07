@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+# Employee Management
+
+This is a showcase project for a Software Engineer hiring process. The idea is to build an Employee Management app, demonstrating your skills and delivery quality as a Developer.
 
 ## Getting Started
 
-First, run the development server:
+**Install dependencies**
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install # or npm, yarn, etc
+```
+
+**Setup environment**
+
+For this project, we're using a PostGres and a Blob storage instance, both under Vercel.
+
+An example file under `.example.env` shows the needed variables.
+
+**Start the application**
+
+To start the local server, run:
+
+```bash
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tooling
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+On this project we're using:
 
-## Learn More
+- [Next.js](https://nextjs.org/docs) - the production ready framework for React.
+- [Drizzle ORM](https://orm.drizzle.team/docs) - a headless TypeScript ORM with a head, with PostGres.
+- [Tailwind CSS](https://tailwindcss.com/docs) - Rapidly build modern websites without ever leaving your HTML.
+- [ShadCN/UI](https://ui.shadcn.com/) - Beautifully designed components that you can copy and paste into your apps.
 
-To learn more about Next.js, take a look at the following resources:
+## Architecture
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Data
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+![DB Schema](erd.svg)
 
-## Deploy on Vercel
+> Notice: We opted for a simpler modeling on the Department entity (just an ENUM), since this application had no use cases requiring a proper table model.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Application
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+.
+├── app
+│   ├── api           # REST API routes
+│   └── employee      # Pages and components
+│
+├── components        # UI components
+│   ├── employee
+│   ├── interaction
+│   ├── layout
+│   └── ui
+│
+├── contexts          # Data sharing contexts
+│   ├── department
+│   └── employee
+│
+├── hooks             # Utility hooks
+│
+├── lib               # Data access and modeling
+│   ├── actions
+│   ├── db
+│   ├── openapi
+│   └── ...
+│
+└── ...
+
+```
+
+### Highlights
+
+- Using Parallel Routes / Interception to load modals and other partial elements via routes
+- Data access handled through Server Actions
+- Integrated typing / schema generation
+- Realtime updates with cache revalidation
+- Context for easy data sharing between components - still fed by Server Actions data
+- React Hook Forms leveraging the rich data scheming
+- OpenAPI docs for REST API
+
+And whatnot.
+
+### Considerations
+
+On the spirit of a timed evaluation, a few enhancements on componentization, file naming, styling and others were deprioritized.
+
+Enjoy! Cheers,

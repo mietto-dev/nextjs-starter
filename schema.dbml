@@ -1,0 +1,30 @@
+enum department {
+  HR
+  Sales
+  Ops
+  Development
+}
+
+enum employee_status {
+  Active
+  Inactive
+}
+
+table employee_department {
+  employee_id integer [not null]
+  date date [not null]
+  department department [not null]
+}
+
+table employee {
+  id integer [pk, not null]
+  name varchar(255) [not null]
+  hire_date date [not null]
+  department department [not null]
+  phone jsonb
+  address jsonb
+  picture text
+  status employee_status [not null, default: 'Active']
+}
+
+ref: employee_department.employee_id > employee.id

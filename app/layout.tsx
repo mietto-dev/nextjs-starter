@@ -1,8 +1,18 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Roboto_Mono, Inter } from "next/font/google";
+import { Toaster } from "@/components/ui/toaster";
+import { Navbar } from "@/components/layout/navbar";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const robotoMono = Roboto_Mono({
+  variable: "--font-roboto-mono",
+  subsets: ["latin"],
+});
+
+const interSans = Inter({
+  variable: "--font-inter-sans",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +26,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body
+        className={`${interSans.variable} ${robotoMono.variable} antialiased`}>
+        <Navbar />
+        {/* <main className="max-w-7xl justify-self-center">{children}</main> */}
+        <main className="container mx-auto">{children}</main>
+        <Toaster />
+      </body>
     </html>
   );
 }
